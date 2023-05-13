@@ -1,24 +1,19 @@
 #!/bin/bash
-
 _get_ziplink () {
     local regex
     regex='(https?)://github.com/.+/.+'
-    if [[ $UPSTREAM_REPO == "sbb_b" ]]
-    then
-        echo "aHR0cHM6Ly9naXRodWIuY29tL3RoZWptdGhvbi9qbWJvdC9hcmNoaXZlL21hc3Rlci56aXA==" | base64 -d
-    elif [[ $UPSTREAM_REPO == "beta" ]]
-    then
-        echo "aHR0cHM6Ly9naXRodWIuY29tL2ptdGhvbnIvam11Yi9hcmNoaXZlL21hc3Rlci56aXA==" | base64 -d
-    elif [[ $UPSTREAM_REPO =~ $regex ]]
-    then
-        if [[ $UPSTREAM_REPO_BRANCH ]]
-        then
+    if [[ $UPSTREAM_REPO == "sbb_b" ]]; then
+        echo "https://github.com/thejmthon/jmbot/archive/master.zip"
+    elif [[ $UPSTREAM_REPO == "beta" ]]; then
+        echo "https://github.com/jmthonr/jmub/archive/main.zip"
+    elif [[ $UPSTREAM_REPO =~ $regex ]]; then
+        if [[ $UPSTREAM_REPO_BRANCH ]]; then
             echo "${UPSTREAM_REPO}/archive/${UPSTREAM_REPO_BRANCH}.zip"
         else
             echo "${UPSTREAM_REPO}/archive/master.zip"
         fi
     else
-        echo "aHR0cHM6Ly9naXRodWIuY29tL3RoZWptdGhvbi9qbWJvdC9hcmNoaXZlL21hc3Rlci56aXA==" | base64 -d
+        echo "https://github.com/thejmthon/jmbot/archive/master.zip"
     fi
 }
 
@@ -26,21 +21,17 @@ _get_repolink () {
     local regex
     local rlink
     regex='(https?)://github.com/.+/.+'
-    if [[ $UPSTREAM_REPO == "sbb_b" ]]
-    then
-        rlink=`echo "aHR0cHM6Ly9naXRodWIuY29tL3RoZWptdGhvbi9qbWJvdC5naXQ" | base64 -d`
-    elif [[ $UPSTREAM_REPO == "beta" ]]
-    then
-        echo "aHR0cHM6Ly9naXRodWIuY29tL2ptdGhvbnIvam1ib3Q" | base64 -d
-    elif [[ $UPSTREAM_REPO =~ $regex ]]
-    then
-        rlink=`echo "${UPSTREAM_REPO}"`
+    if [[ $UPSTREAM_REPO == "sbb_b" ]]; then
+        rlink="https://github.com/thejmthon/jmbot.git"
+    elif [[ $UPSTREAM_REPO == "beta" ]]; then
+        rlink="https://github.com/thejmthon/jmbot.git"
+    elif [[ $UPSTREAM_REPO =~ $regex ]]; then
+        rlink="${UPSTREAM_REPO}"
     else
-        rlink=`echo "aHR0cHM6Ly9naXRodWIuY29tL3RoZWptdGhvbi9qbWJvdC5naXQ" | base64 -d`
+        rlink="https://github.com/thejmthon/jmbot.git"
     fi
     echo "$rlink"
 }
-
 
 _run_python_code() {
     python3${pVer%.*} -c "$1"
